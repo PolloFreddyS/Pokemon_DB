@@ -1,4 +1,4 @@
-﻿RecordID,Type
+RecordID,Type
 1,Bug
 2,Dark
 3,Dragon
@@ -11,10 +11,9 @@
 10,Grass
 11,Ground
 12,Ice
-13,NULL
-14,Normal
-15,Poison
-16,Psychic
-17,Rock
-18,Steel
-19,Water
+13,Normal
+14,Poison
+15,Psychic
+16,Rock
+17,Steel
+18,Water
