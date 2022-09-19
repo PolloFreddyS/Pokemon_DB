@@ -1,7 +1,7 @@
 import sqlite3 as sql3
 import pandas as pd
 from markupsafe import escape
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, abort
 
 app = Flask(__name__)
 
@@ -48,7 +48,6 @@ def get_pokemon_by_pokedex(pokedex_ref):
         pokedex_ref = int(pokedex_ref)
         query_condition = f"WHERE PokedexNumber == {pokedex_ref}"
     except ValueError:
-        print("test")
         pokemon_name = str(pokedex_ref).lower().capitalize()
         query_condition = f"WHERE PokemonName == \"{pokemon_name}\";"
     finally:
@@ -79,6 +78,8 @@ def get_pokemon_by_pokedex(pokedex_ref):
     """
         with sql3.connect("../pokeDB.db") as conn:
             df = pd.read_sql(query, conn)
+            if len(df) < 1:
+                abort(404)
             df.drop(columns=["PrimaryType","SecondaryType","PrimaryAbility","SecondaryAbility", "HiddenAbility", "SpecialEventAbility", "RegionofOrigin", "GameofOrigin", "PrimaryEggGroup", "SecondaryEggGroup", ], inplace=True)
             df = df.to_dict()
             pokemon_data = {
